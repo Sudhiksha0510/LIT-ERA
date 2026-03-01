@@ -69,11 +69,86 @@ export default function About() {
 
         </div>
 
-        {/* Our Team Section */}
+        {/* Faculty Coordinator Section */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+          className="mt-32"
+        >
+          <div className="text-center mb-16">
+            <span className="font-accent text-gold text-sm tracking-[0.3em] uppercase mb-4 block">Guidance</span>
+            <h2 className="font-display text-4xl md:text-5xl text-ink font-bold mb-6">
+              Faculty <span className="italic font-light text-gold">Coordinator</span>
+            </h2>
+            <div className="w-24 h-px bg-gold mx-auto"></div>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              whileHover={{ y: -5 }}
+              className="bg-white border border-ink/5 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-sm overflow-hidden"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+                {/* Faculty Image */}
+                <div className="md:col-span-1 relative">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src="https://picsum.photos/seed/faculty-coordinator-professor/400/400.jpg"
+                      alt="Faculty Coordinator"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
+                </div>
+
+                {/* Faculty Details */}
+                <div className="md:col-span-2 p-8 md:p-12 flex flex-col justify-center">
+                  <h3 className="font-display text-3xl text-ink font-bold mb-2">Dr. [Faculty Name]</h3>
+                  <p className="font-accent text-gold text-sm tracking-widest uppercase mb-4">Faculty Coordinator</p>
+                  <p className="font-accent text-ink/70 text-sm tracking-widest uppercase mb-6">Department of English</p>
+                  
+                  <div className="space-y-4 font-body text-ink/80 leading-relaxed">
+                    <p>
+                      With over [X] years of experience in academia and literature, our faculty coordinator brings invaluable expertise and guidance to LIT'ERA Club. Their passion for literature and commitment to student development has been instrumental in shaping our literary community.
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                      <div className="bg-cream/50 p-4 rounded-sm border border-gold/20">
+                        <h4 className="font-accent text-ink text-sm tracking-widest uppercase mb-2">Expertise</h4>
+                        <ul className="font-body text-ink/70 text-sm space-y-1">
+                          <li>• Contemporary Literature</li>
+                          <li>• Creative Writing</li>
+                          <li>• Literary Criticism</li>
+                          <li>• Academic Research</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-cream/50 p-4 rounded-sm border border-gold/20">
+                        <h4 className="font-accent text-ink text-sm tracking-widest uppercase mb-2">Contributions</h4>
+                        <ul className="font-body text-ink/70 text-sm space-y-1">
+                          <li>• Mentorship Programs</li>
+                          <li>• Literary Workshops</li>
+                          <li>• Research Guidance</li>
+                          <li>• Curriculum Development</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Our Team Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
           className="mt-32"
         >
           <div className="text-center mb-16">

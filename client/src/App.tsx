@@ -12,8 +12,6 @@ import { AdminFab } from "@/components/AdminFab";
 
 import Home from "@/pages/Home";
 import About from "@/pages/About";
-import Zones from "@/pages/Zones";
-import ZoneDetail from "@/pages/ZoneDetail";
 import EventsPage from "@/pages/EventsPage";
 import Contact from "@/pages/Contact";
 import MUN from "@/pages/MUN";
@@ -78,8 +76,6 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
-          <Route path="/zones" component={Zones} />
-          <Route path="/zones/:zoneId" component={ZoneDetail} />
           <Route path="/events" component={EventsPage} />
           <Route path="/mun" component={MUN} />
           <Route path="/magazine" component={Magazine} />
