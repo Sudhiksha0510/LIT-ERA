@@ -30,6 +30,11 @@ export default function EventPhotosModal({ isOpen, onClose, event }: EventPhotos
       setCurrentPhotoIndex(0);
       setScale(1);
       setPosition({ x: 0, y: 0 });
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore body scroll when modal is closed
+      document.body.style.overflow = '';
     }
   }, [isOpen]);
 
@@ -168,7 +173,16 @@ export default function EventPhotosModal({ isOpen, onClose, event }: EventPhotos
           </div>
 
           {/* Content Area */}
-          <div className="relative bg-ink/10" style={{ height: 'calc(90vh - 200px)' }}>
+          <div 
+            className="relative bg-ink/10 overflow-auto p-6" 
+            style={{ 
+              height: event.photos.length > 6 
+                ? 'calc(100vh - 200px)' 
+                : event.photos.length > 3 
+                  ? 'calc(100vh - 250px)' 
+                  : 'calc(100vh - 300px)'
+            }}
+          >
             {/* Grid View */}
             {currentView === 'grid' && (
               <motion.div

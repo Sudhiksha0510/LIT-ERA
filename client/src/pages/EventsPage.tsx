@@ -81,13 +81,11 @@ const allEvents = [
     registrationOpen: false,
     status: "done",
     photos: [
-      "https://picsum.photos/seed/seekh-1-2025/800/600.jpg",
-      "https://picsum.photos/seed/seekh-2-2025/800/600.jpg",
-      "https://picsum.photos/seed/seekh-3-2025/800/600.jpg",
-      "https://picsum.photos/seed/seekh-4-2025/800/600.jpg",
-      "https://picsum.photos/seed/seekh-5-2025/800/600.jpg",
-      "https://picsum.photos/seed/seekh-6-2025/800/600.jpg"
-    ]
+      "https://picsum.photos/seed/lexicon-1-2025/800/600.jpg",
+      "https://picsum.photos/seed/lexicon-2-2025/800/600.jpg",
+      "https://picsum.photos/seed/lexicon-3-2025/800/600.jpg",
+      "https://picsum.photos/seed/lexicon-4-2025/800/600.jpg"
+      ]
   },
   {
     id: 16,
