@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { Calendar, MapPin, Users, Clock, ArrowRight, Filter, Search, Tag, Camera } from "lucide-react";
+import { Calendar, Camera, Search } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import EventPhotosModal from "@/components/EventPhotosModal";
+import EventDetailsModal from "@/components/EventDetailsModal";
 
 const allEvents = [
   {
@@ -22,92 +23,76 @@ const allEvents = [
     registrationOpen: true,
     status: "upcoming",
     isMUN: true,
+    overview: "The Model United Nations Conference 2026 brings together aspiring diplomats and global leaders to simulate UN proceedings and debate pressing international issues.",
+    structure: "Three-day conference featuring committee sessions, crisis simulations, keynote speeches, and networking events. Delegates represent different countries and work collaboratively to draft resolutions.",
+    impact: "Participants develop critical thinking, public speaking, and negotiation skills while gaining deeper understanding of global affairs and international relations."
   },
   {
     id: 13,
     title: "Ignite: The Grand Kickoff",
     date: "January 5, 2026",
-    time: "6:00 PM - 9:00 PM",
     location: "Main Auditorium",
-    attendees: 150,
-    maxAttendees: 200,
     category: "Special Event",
     description: "An electrifying evening marking the grand launch of our literary club's most ambitious season yet. Experience performances, announcements, and the unveiling of our exclusive initiatives.",
-    image: "https://picsum.photos/seed/ignite-grand-kickoff-2026/800/500.jpg",
+    image: "/images/orientation.jpeg",
     featured: false,
     registrationOpen: false,
     status: "done",
     photos: [
-      "https://picsum.photos/seed/ignite-1-2026/800/600.jpg",
-      "https://picsum.photos/seed/ignite-2-2026/800/600.jpg",
-      "https://picsum.photos/seed/ignite-3-2026/800/600.jpg",
-      "https://picsum.photos/seed/ignite-4-2026/800/600.jpg",
-      "https://picsum.photos/seed/ignite-5-2026/800/600.jpg"
-    ]
+      "/images/orientation2.jpeg",
+      "/images/orientation3.jpeg",
+      "/images/orientation.jpeg",
+      "/images/orientation4.jpeg",
+    ],
+    overview: "The LITERA Orientation Event marked the official commencement of the club's activities for the academic year. It was organized to introduce students to the club's objectives, structure, and planned initiatives. The event aimed to create awareness, build enthusiasm, and establish a strong foundation for the functioning of the club.",
+    structure: "The programme began with a welcome address by the club leadership, followed by a presentation outlining the club's vision, goals, and upcoming activities. An official poster unveiling symbolically marked the launch of the club for the year. Faculty members and student leaders addressed the gathering, providing guidance and motivation. The session concluded with interaction and clarification regarding member participation and roles.",
+    impact: "The orientation successfully increased student awareness and interest in the club's initiatives. Participants gained clarity about membership expectations and opportunities for involvement. The event fostered unity, enthusiasm, and a clear sense of direction, establishing a structured and motivated beginning for the academic year."
   },
   {
     id: 14,
     title: "Lexicon Clash",
     date: "December 15, 2025",
-    time: "5:00 PM - 8:00 PM",
-    location: "Debate Hall",
-    attendees: 80,
-    maxAttendees: 100,
     category: "Debate",
     description: "An intense battle of words and wits where participants showcase their linguistic prowess in this ultimate vocabulary showdown.",
-    image: "https://picsum.photos/seed/lexicon-clash-2025/800/500.jpg",
+    image: "/images/debate3.jpeg",
     featured: false,
     registrationOpen: false,
     status: "done",
     photos: [
-      "https://picsum.photos/seed/lexicon-1-2025/800/600.jpg",
-      "https://picsum.photos/seed/lexicon-2-2025/800/600.jpg",
-      "https://picsum.photos/seed/lexicon-3-2025/800/600.jpg",
-      "https://picsum.photos/seed/lexicon-4-2025/800/600.jpg"
-    ]
+      "/images/debate2.jpeg",
+      "/images/debate.jpeg",
+      "/images/debate4.jpeg",
+      "/images/debate5.jpeg",
+      "/images/debate6.jpeg",
+      "/images/debate7.jpeg",
+      "/images/debate3.jpeg",
+    ],
+    overview: "Lexicon Clash, the Inter-Departmental Debate Competition organized by LITERA, was conducted to promote structured academic discourse and intellectual engagement among students. The event brought together participants from various departments to deliberate on contemporary and thought-provoking topics.",
+    structure: "The competition was conducted in multiple rounds, beginning with preliminary sessions and culminating in a final round judged by faculty members. Teams presented arguments and rebuttals in a structured format, adhering to time limits and evaluation criteria. Judges assessed participants based on content, clarity, confidence, and teamwork before announcing the winners.",
+    impact: "The competition significantly enhanced participants' public speaking, analytical reasoning, and argumentation skills. It encouraged respectful dialogue and strengthened inter-departmental interaction. The event also helped identify students with strong communication and leadership potential, reinforcing the club's commitment to academic excellence."
   },
   {
     id: 15,
     title: "Seekh",
     date: "November 20, 2025",
-    time: "4:00 PM - 7:00 PM",
-    location: "Library Conference Room",
-    attendees: 45,
-    maxAttendees: 60,
     category: "Project Expo",
     description: "A profound exploration of the art of learning and knowledge sharing through interactive workshops and literary discussions.",
-    image: "https://picsum.photos/seed/seekh-2025/800/500.jpg",
+    image: "/images/activity.jpeg",
     featured: false,
     registrationOpen: false,
     status: "done",
     photos: [
-      "https://picsum.photos/seed/lexicon-1-2025/800/600.jpg",
-      "https://picsum.photos/seed/lexicon-2-2025/800/600.jpg",
-      "https://picsum.photos/seed/lexicon-3-2025/800/600.jpg",
-      "https://picsum.photos/seed/lexicon-4-2025/800/600.jpg"
-      ]
-  },
-  {
-    id: 16,
-    title: "Litera Hangout",
-    date: "October 15, 2025",
-    time: "5:00 PM - 8:00 PM",
-    location: "Student Lounge",
-    attendees: 65,
-    maxAttendees: 80,
-    category: "Social",
-    description: "A relaxed evening of literary conversations, book exchanges, and creative networking with fellow literature enthusiasts in a casual setting.",
-    image: "https://picsum.photos/seed/litera-hangout-2025/800/500.jpg",
-    featured: false,
-    registrationOpen: false,
-    status: "done",
-    photos: [
-      "https://picsum.photos/seed/hangout-1-2025/800/600.jpg",
-      "https://picsum.photos/seed/hangout-2-2025/800/600.jpg",
-      "https://picsum.photos/seed/hangout-3-2025/800/600.jpg",
-      "https://picsum.photos/seed/hangout-4-2025/800/600.jpg",
-      "https://picsum.photos/seed/hangout-5-2025/800/600.jpg"
-    ]
+      "/images/activity3.jpeg",
+      "/images/activity7.jpeg",
+      "/images/activity4.jpeg",
+      "/images/activity5.jpeg",
+      "/images/activity6.jpeg",
+      "/images/activity.jpeg",
+      "/images/activity2.jpeg"
+    ],
+    overview: "As part of the SEEKH Initiative, LITERA set up a dedicated Activity Zone to contribute a creative and interactive dimension to the campus-wide event. The objective was to provide students with an engaging space that combined recreation with literary and cognitive skill-building activities.",
+    structure: "The club organized three stalls featuring a variety of interactive activities such as word-based challenges, logical puzzles, and creative exercises. The stalls were managed by volunteers who guided participants and ensured smooth coordination throughout the day. Attractive displays, structured activity rules, and small incentives encouraged consistent participation and interaction among students.",
+    impact: "The activity zone witnessed continuous student participation and positive engagement. It enhanced creative thinking, collaboration, and quick reasoning skills among participants. The event also strengthened the visibility and recognition of LITERA within the campus community, reflecting its active contribution to academic and co-curricular development."
   },
   ];
 
@@ -118,6 +103,8 @@ export default function EventsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEventDetails, setSelectedEventDetails] = useState<any>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const filteredEvents = allEvents.filter((event) => {
     const matchesCategory = selectedCategory === "All" || event.category === selectedCategory;
@@ -139,6 +126,17 @@ export default function EventsPage() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedEvent(null);
+  };
+
+  const handleAboutClick = (event: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedEventDetails(event);
+    setIsDetailsModalOpen(true);
+  };
+
+  const closeDetailsModal = () => {
+    setIsDetailsModalOpen(false);
+    setSelectedEventDetails(null);
   };
 
   return (
@@ -230,7 +228,7 @@ export default function EventsPage() {
                     )}
                   </div>
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/50 to-transparent">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent">
                     <div className="absolute bottom-0 left-0 right-0 p-6 text-cream">
                       <div className="mb-3">
                         <span className="px-3 py-1 bg-gold text-ink text-xs font-accent uppercase tracking-wider rounded">
@@ -247,27 +245,21 @@ export default function EventsPage() {
                             <Calendar className="w-4 h-4 text-gold" />
                             {event.date}
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-gold" />
-                            {event.time}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-gold" />
-                            {event.location}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Users className="w-4 h-4 text-gold" />
-                            {event.attendees} attended
-                          </div>
                         </div>
                         
-                        {event.photos && event.photos.length > 0 && (
-                          <div className="text-right">
-                            <span className="px-4 py-2 bg-gold text-ink text-sm font-accent uppercase tracking-wider rounded hover:bg-gold/80 transition-colors duration-300 inline-block">
+                        <div className="flex flex-col gap-2">
+                          <button
+                            onClick={(e) => handleAboutClick(event, e)}
+                            className="px-4 py-2 bg-gold text-ink text-sm font-accent uppercase tracking-wider rounded hover:bg-gold/80 transition-colors duration-300"
+                          >
+                            About
+                          </button>
+                          {event.photos && event.photos.length > 0 && (
+                            <span className="px-4 py-2 bg-gold text-ink text-sm font-accent uppercase tracking-wider rounded hover:bg-gold/80 transition-colors duration-300 inline-block text-center">
                               View Photos
                             </span>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -327,18 +319,6 @@ export default function EventsPage() {
                         <Calendar className="w-4 h-4 text-gold" />
                         {event.date}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-gold" />
-                        {event.time}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-gold" />
-                        {event.location}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 text-gold" />
-                        {event.attendees}/{event.maxAttendees} attending
-                      </div>
                     </div>
                     
                     {event.isMUN ? (
@@ -364,6 +344,13 @@ export default function EventsPage() {
           isOpen={isModalOpen}
           onClose={closeModal}
           event={selectedEvent}
+        />
+
+        {/* Event Details Modal */}
+        <EventDetailsModal
+          isOpen={isDetailsModalOpen}
+          onClose={closeDetailsModal}
+          event={selectedEventDetails}
         />
       </div>
     </div>

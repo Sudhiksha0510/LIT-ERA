@@ -1,44 +1,35 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ChevronLeft, ChevronRight, Calendar, Users, MapPin, Pause, Play } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { Calendar, Users, MapPin, Pause, Play } from "lucide-react";
+import { useState } from "react";
 
 const eventPhotos = [
   {
     id: 1,
-    title: "Literary Debate Championship",
+    title: " LITERA Orientation Event",
     date: "March 15, 2026",
     location: "Main Auditorium",
     attendees: 45,
-    image: "https://picsum.photos/seed/literary-debate-2026/600/400.jpg",
-    category: "Debate"
+    image: "/images/orientation.jpeg",
+    category: "Orientation"
   },
   {
     id: 2,
-    title: "Poetry Slam Night",
+    title: " SEEKH Initiative Litera Activity Zone",
     date: "March 8, 2026",
     location: "Literary Café",
     attendees: 32,
-    image: "https://picsum.photos/seed/poetry-slam-2026/600/400.jpg",
-    category: "Poetry"
+    image: "/images/activity.jpeg",
+    category: "Activity"
   },
   {
     id: 3,
-    title: "Book Reading Session",
+    title: "Debate Competition 2025 (Lexicon Clash)",
     date: "March 1, 2026",
-    location: "Reading Circle",
-    attendees: 28,
-    image: "https://picsum.photos/seed/book-reading-2026/600/400.jpg",
-    category: "Reading"
-  },
-  {
-    id: 4,
-    title: "Creative Writing Workshop",
-    date: "February 22, 2026",
-    location: "Writer's Workshop",
-    attendees: 18,
-    image: "https://picsum.photos/seed/writing-workshop-2026/600/400.jpg",
-    category: "Writing"
+    location: "Seminar Hall",
+    attendees: 80,
+    image: "/images/debate.jpeg",
+    category: "Debate"
   },
   {
     id: 5,
@@ -46,27 +37,10 @@ const eventPhotos = [
     date: "February 15-17, 2026",
     location: "Conference Hall",
     attendees: 120,
-    image: "https://picsum.photos/seed/mun-conference-2026/600/400.jpg",
+    image: "/images/mun.jpeg",
     category: "Conference"
   },
-  {
-    id: 7,
-    title: "Author Meet & Greet",
-    date: "February 1, 2026",
-    location: "Main Library",
-    attendees: 52,
-    image: "https://picsum.photos/seed/author-meet-2026/600/400.jpg",
-    category: "Special Event"
-  },
-  {
-    id: 8,
-    title: "Community Book Drive",
-    date: "January 25, 2026",
-    location: "Community Center",
-    attendees: 67,
-    image: "https://picsum.photos/seed/book-drive-2026/600/400.jpg",
-    category: "Community"
-  }
+  
 ];
 
 export default function EventPhotoGallery() {
