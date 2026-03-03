@@ -1,84 +1,78 @@
 import {
-  pgTable,
+  sqliteTable,
   text,
-  serial,
   integer,
-  boolean,
-  timestamp,
-  date,
-  varchar,
   index,
-} from "drizzle-orm/pg-core";
+} from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { sql } from "drizzle-orm";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
   club: text("club").default("LIT'ERA"),
-  isAdmin: boolean("is_admin").default(false),
-  joinDate: timestamp("join_date").defaultNow(),
+  isAdmin: integer("is_admin", { mode: 'boolean' }).default(false),
+  joinDate: integer("join_date", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-export const contactSubmissions = pgTable("contact_submissions", {
-  id: serial("id").primaryKey(),
+export const contactSubmissions = sqliteTable("contact_submissions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   email: text("email").notNull(),
   country: text("country"),
   reason: text("reason"),
   message: text("message").notNull(),
-  submissionDate: timestamp("submission_date").defaultNow(),
+  submissionDate: integer("submission_date", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-export const events = pgTable("events", {
-  id: serial("id").primaryKey(),
+export const events = sqliteTable("events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
   description: text("description"),
-  eventDate: date("event_date"),
-  isActive: boolean("is_active").default(true),
+  eventDate: text("event_date"), // SQLite uses text for dates
+  isActive: integer("is_active", { mode: 'boolean' }).default(true),
 });
 
-export const gameScores = pgTable("game_scores", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
+export const gameScores = sqliteTable("game_scores", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").references(() => users.id),
   gameType: text("game_type").notNull(), // 'strands' or 'spellbee'
   score: integer("score"),
   completionTime: integer("completion_time"),
-  completedDate: timestamp("completed_date").defaultNow(),
+  completedDate: integer("completed_date", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 }, (table) => ({
   gameTypeIdx: index("game_scores_game_type_idx").on(table.gameType),
   userIdIdx: index("game_scores_user_id_idx").on(table.userId),
 }));
 
-export const puzzles = pgTable("puzzles", {
-  id: serial("id").primaryKey(),
+export const puzzles = sqliteTable("puzzles", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   type: text("type").notNull(), // 'strands' or 'spellbee'
   data: text("data").notNull(), // JSON stringified puzzle data
-  publishDate: date("publish_date").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+  publishDate: text("publish_date").notNull(),
+  createdAt: integer("created_at", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 }, (table) => ({
-  // Composite index for fast daily puzzle lookup
   typeDateIdx: index("puzzles_type_date_idx").on(table.type, table.publishDate),
   publishDateIdx: index("puzzles_publish_date_idx").on(table.publishDate),
 }));
 
-export const content = pgTable("content", {
-  id: serial("id").primaryKey(),
+export const content = sqliteTable("content", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   type: text("type").notNull(), // 'thought', 'riddle', 'quote', 'fact', 'poem'
   title: text("title").notNull(),
   content: text("content").notNull(),
   answer: text("answer"), // for riddles
   author: text("author").notNull(),
-  date: date("date").notNull(),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
+  date: text("date").notNull(),
+  isActive: integer("is_active", { mode: 'boolean' }).default(true),
+  createdAt: integer("created_at", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-export const submissions = pgTable("submissions", {
-  id: serial("id").primaryKey(),
+export const submissions = sqliteTable("submissions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   email: text("email").notNull(),
   title: text("title").notNull(),
@@ -89,26 +83,45 @@ export const submissions = pgTable("submissions", {
   originalFileName: text("original_file_name"),
   filePath: text("file_path"),
   status: text("status").default("pending"), // 'pending', 'approved', 'rejected'
-  submittedAt: timestamp("submitted_at").defaultNow(),
+  submittedAt: integer("submitted_at", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-export const eventRegistrations = pgTable("event_registrations", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
+export const publications = sqliteTable("publications", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  category: text("category").notNull(), // 'newspaper', 'magazine', 'journal', 'anthology'
+  author: text("author").notNull(),
+  description: text("description").notNull(),
+  coverImage: text("cover_image"), // path to cover image
+  pdfFile: text("pdf_file"), // path to PDF file
+  pdfFileName: text("pdf_file_name"),
+  pages: integer("pages"),
+  publishDate: text("publish_date").notNull(),
+  featured: integer("featured", { mode: 'boolean' }).default(false),
+  views: integer("views").default(0),
+  downloads: integer("downloads").default(0),
+  likes: integer("likes").default(0),
+  isActive: integer("is_active", { mode: 'boolean' }).default(true),
+  createdAt: integer("created_at", { mode: 'timestamp' }).default(sql`(unixepoch())`),
+});
+
+export const eventRegistrations = sqliteTable("event_registrations", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").references(() => users.id),
   eventId: integer("event_id").notNull(),
   eventTitle: text("event_title").notNull(),
-  registeredAt: timestamp("registered_at").defaultNow(),
+  registeredAt: integer("registered_at", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
-export const munRegistrations = pgTable("mun_registrations", {
-  id: serial("id").primaryKey(),
-  userId: varchar("user_id").references(() => users.id),
+export const munRegistrations = sqliteTable("mun_registrations", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").references(() => users.id),
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
   committee: text("committee").notNull(),
   experience: text("experience"),
-  registeredAt: timestamp("registered_at").defaultNow(),
+  registeredAt: integer("registered_at", { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });
 
 // Zod Schemas
@@ -130,6 +143,7 @@ export const insertContentSchema = createInsertSchema(content).omit({
 export const insertSubmissionSchema = createInsertSchema(submissions).omit({ id: true, submittedAt: true });
 export const insertEventRegistrationSchema = createInsertSchema(eventRegistrations).omit({ id: true, registeredAt: true });
 export const insertMunRegistrationSchema = createInsertSchema(munRegistrations).omit({ id: true, registeredAt: true });
+export const insertPublicationSchema = createInsertSchema(publications).omit({ id: true, createdAt: true, views: true, downloads: true, likes: true });
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -149,3 +163,5 @@ export type EventRegistration = typeof eventRegistrations.$inferSelect;
 export type InsertEventRegistration = z.infer<typeof insertEventRegistrationSchema>;
 export type MunRegistration = typeof munRegistrations.$inferSelect;
 export type InsertMunRegistration = z.infer<typeof insertMunRegistrationSchema>;
+export type Publication = typeof publications.$inferSelect;
+export type InsertPublication = z.infer<typeof insertPublicationSchema>;
